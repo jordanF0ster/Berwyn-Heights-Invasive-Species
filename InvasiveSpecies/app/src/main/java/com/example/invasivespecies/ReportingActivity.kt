@@ -67,6 +67,8 @@ class ReportingActivity : AppCompatActivity() {
 
         Toast.makeText(this, "$name $color $amount $notes", Toast.LENGTH_SHORT)
             .show()
+        setResult(RESULT_OK)
+        finish()
     }
 
     private fun dispatchTakePictureIntent() {
@@ -89,6 +91,7 @@ class ReportingActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "Invasive-Species"
         private const val REQUEST_IMAGE_CAPTURE = 1
+        const val ADD_REPORT_REQUEST = 0
     }
 
 }
