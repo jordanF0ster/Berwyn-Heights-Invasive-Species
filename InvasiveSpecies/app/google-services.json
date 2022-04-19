@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "142477805622",
+    "project_id": "bh-invasive-species",
+    "storage_bucket": "bh-invasive-species.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:142477805622:android:fe0f9c308fa3b641cdb097",
+        "android_client_info": {
+          "package_name": "com.example.invasivespecies"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "142477805622-41q90mpr7nplqmv2uergk0qvos9dt8s4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQcCcCfYxdRx9SeQVt_mxVDclYZOOcSGM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "142477805622-41q90mpr7nplqmv2uergk0qvos9dt8s4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
