@@ -1,14 +1,14 @@
 package com.example.invasivespecies
 
-import android.R.attr.button
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 
 private lateinit var mImageView : ImageView
@@ -19,10 +19,14 @@ private lateinit var mNotesEditText: EditText
 private lateinit var mColorSpinner: Spinner
 private lateinit var mAmountSpinner: Spinner
 
+private lateinit var database: FirebaseDatabase
+
 class ReportingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reporting)
+
+        database = FirebaseDatabase.getInstance()
 
         mImageView = findViewById(R.id.imageView)
         mPictureButton = findViewById(R.id.pictureButton)
@@ -31,7 +35,7 @@ class ReportingActivity : AppCompatActivity() {
         mNotesEditText = findViewById(R.id.notesEditText)
 
         mPictureButton.setOnClickListener { dispatchTakePictureIntent() }
-        mSaveButton.setOnClickListener { saveInfo() }
+        mSaveButton.setOnClickListener { writeNewReport() }
 
         mColorSpinner = findViewById(R.id.colorSpinner)
         mAmountSpinner = findViewById(R.id.amountSpinner)
@@ -59,13 +63,19 @@ class ReportingActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveInfo() {
+    private fun writeNewReport() {
+        // still need to get img
         val name = mNameEditText.text.toString()
         val color = mColorSpinner.selectedItem.toString()
         val amount = mAmountSpinner.selectedItem.toString()
         val notes = mNotesEditText.text.toString()
 
-        Toast.makeText(this, "$name $color $amount $notes", Toast.LENGTH_SHORT)
+        val dbRef = database.getReference("reports").child(name).push()
+
+        val report = Report(dbRef.key, name,color,amount,notes)
+        dbRef.setValue(report)
+
+        Toast.makeText(this, "Report Created", Toast.LENGTH_SHORT)
             .show()
         setResult(RESULT_OK)
         finish()
