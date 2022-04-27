@@ -43,4 +43,12 @@
         android:layout_toEndOf="@id/plant_item_image"
         android:layout_below="@id/plant_name_amount"
         android:text="additonal notes" />
+
+    <CheckBox
+        android:id="@+id/plant_item_checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:text="Removed?" />
 </RelativeLayout>

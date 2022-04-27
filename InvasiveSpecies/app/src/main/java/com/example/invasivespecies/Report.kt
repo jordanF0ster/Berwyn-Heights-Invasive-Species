@@ -2,6 +2,7 @@ package com.example.invasivespecies
 
 import android.location.Location
 import com.google.firebase.database.IgnoreExtraProperties
+import java.util.*
 
 @IgnoreExtraProperties
 class Report {
@@ -11,6 +12,11 @@ class Report {
     var amount: String? = null
     var notes: String? = null
     var location: Location? = null
+    var status = Status.NOTDONE
+
+    enum class Status {
+        NOTDONE, DONE
+    }
 
     internal constructor(
         id: String?,

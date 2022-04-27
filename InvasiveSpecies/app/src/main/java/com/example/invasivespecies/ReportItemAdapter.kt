@@ -11,15 +11,17 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.FirebaseDatabase
 
 class ReportItemAdapter(private val mContext: Context) :
     RecyclerView.Adapter<ReportItemAdapter.ViewHolder>() {
 
     private val mItems = ArrayList<Report>()
+    private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
 
     fun add(item: Report) {
         mItems.add(item)
-//        notifyItemChanged(mItems.size)
+        notifyItemChanged(mItems.size)
     }
 
     // Clears the list adapter of all items.
@@ -39,6 +41,7 @@ class ReportItemAdapter(private val mContext: Context) :
         var mColorTextView: TextView? = null
         var mAmountTextView: TextView? = null
         var mNotesTextView: TextView? = null
+        var mCheckBox: CheckBox? = null
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -51,6 +54,7 @@ class ReportItemAdapter(private val mContext: Context) :
         viewHolder.mColorTextView = viewHolder.mItemLayout.findViewById<TextView>(R.id.plant_item_color)
         viewHolder.mAmountTextView = viewHolder.mItemLayout.findViewById<TextView>(R.id.plant_name_amount)
         viewHolder.mNotesTextView = viewHolder.mItemLayout.findViewById<TextView>(R.id.plant_item_notes)
+        viewHolder.mCheckBox = viewHolder.mItemLayout.findViewById<CheckBox>(R.id.plant_item_checkBox)
 
         return viewHolder
     }
@@ -65,6 +69,20 @@ class ReportItemAdapter(private val mContext: Context) :
             viewHolder.mColorTextView!!.text = reportItem.color
             viewHolder.mAmountTextView!!.text = reportItem.amount
             viewHolder.mNotesTextView!!.text = reportItem.notes
+            viewHolder.mCheckBox!!.isChecked = reportItem.status == Report.Status.DONE
+
+            viewHolder.mCheckBox!!.setOnCheckedChangeListener{ _, isChecked ->
+                if(isChecked) {
+                    reportItem.status = Report.Status.DONE
+                    mItems.removeAt(viewHolder.adapterPosition)
+                    database.getReference("reports").child(reportItem.plantname!!)
+                        .child(reportItem.id!!).removeValue()
+                    notifyItemRemoved(viewHolder.adapterPosition)
+                    notifyItemRangeChanged(viewHolder.adapterPosition,mItems.size)
+                } else {
+                    reportItem.status = Report.Status.NOTDONE
+                }
+            }
         }
     }
 
