@@ -94,7 +94,7 @@ class ReportingActivity : AppCompatActivity() {
 
     private fun writeNewReport() {
         // still need to get img
-        val name = mNameEditText.text.toString()
+        val name = mNameEditText.text.toString().lowercase()
         val color = mColorSpinner.selectedItem.toString()
         val amount = mAmountSpinner.selectedItem.toString()
         val notes = mNotesEditText.text.toString()
@@ -256,6 +256,7 @@ class ReportingActivity : AppCompatActivity() {
         private const val TAG = "Invasive-Species"
         private const val REQUEST_IMAGE_CAPTURE = 1
         const val ADD_REPORT_REQUEST = 0
+        const val VIEW_REPORT_REQUEST = 1
         private const val FINE_LOC_PERM_REQ = 200
         private const val POLLING_FREQ = 1000 * 10.toLong()
         private const val FASTEST_UPDATE_FREQ = 1000 * 2.toLong()
