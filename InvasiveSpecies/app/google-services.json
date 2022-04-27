@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "142477805622",
+    "firebase_url": "https://bh-invasive-species-default-rtdb.firebaseio.com",
     "project_id": "bh-invasive-species",
     "storage_bucket": "bh-invasive-species.appspot.com"
   },

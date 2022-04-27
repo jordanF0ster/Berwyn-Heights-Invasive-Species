@@ -17,6 +17,7 @@ class ReportingHomeActivity : AppCompatActivity() {
         viewReportsButton = findViewById(R.id.viewReportsButton)
 
         createReportButton.setOnClickListener { createReport() }
+        viewReportsButton.setOnClickListener { viewReports() }
     }
 
     private fun createReport() {
@@ -26,6 +27,16 @@ class ReportingHomeActivity : AppCompatActivity() {
                 ReportingActivity::class.java
             ),
             ReportingActivity.ADD_REPORT_REQUEST
+        )
+    }
+
+    private fun viewReports() {
+        startActivityForResult(
+            Intent(
+                this,
+                ViewReports::class.java
+            ),
+            ReportingActivity.VIEW_REPORT_REQUEST
         )
     }
 
