@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.invasivespecies" >
+    package="com.example.invasivespecies">
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -15,25 +15,28 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.InvasiveSpecies" >
+        android:theme="@style/Theme.InvasiveSpecies">
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
         <activity
             android:name=".ViewReports"
             android:exported="false" />
         <activity
             android:name=".ReportingHomeActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".ReportingActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true" >
-             <intent-filter>
-             <action android:name="android.intent.action.MAIN" />
-
-             <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
-        </activity>
+            android:exported="false"/>
     </application>
 
 </manifest>
