@@ -18,7 +18,9 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.ktx.Firebase
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
@@ -98,10 +100,19 @@ class ReportingActivity : AppCompatActivity() {
         val color = mColorSpinner.selectedItem.toString()
         val amount = mAmountSpinner.selectedItem.toString()
         val notes = mNotesEditText.text.toString()
+        val user = Firebase.auth.currentUser
+        val creator = if (user != null && user.displayName != null) user.displayName else "none"
 
         val dbRef = database.getReference("reports").child(name).push()
-        val lc = deviceLocation
-        val report = Report(dbRef.key, name,color,amount,notes, deviceLocation)
+        val report = Report(
+            dbRef.key,
+            name,
+            color,
+            amount,
+            notes,
+            deviceLocation,
+            creator!!
+        )
         dbRef.setValue(report)
 
         Toast.makeText(this, "Report Created", Toast.LENGTH_SHORT)

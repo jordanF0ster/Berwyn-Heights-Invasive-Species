@@ -42,6 +42,7 @@ class ReportItemAdapter(private val mContext: Context) :
         var mAmountTextView: TextView? = null
         var mNotesTextView: TextView? = null
         var mCheckBox: CheckBox? = null
+        var mCreatorTextView: TextView? = null
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -55,6 +56,7 @@ class ReportItemAdapter(private val mContext: Context) :
         viewHolder.mAmountTextView = viewHolder.mItemLayout.findViewById<TextView>(R.id.plant_name_amount)
         viewHolder.mNotesTextView = viewHolder.mItemLayout.findViewById<TextView>(R.id.plant_item_notes)
         viewHolder.mCheckBox = viewHolder.mItemLayout.findViewById<CheckBox>(R.id.plant_item_checkBox)
+        viewHolder.mCreatorTextView = viewHolder.mItemLayout.findViewById<TextView>(R.id.plant_item_creator)
 
         return viewHolder
     }
@@ -70,6 +72,7 @@ class ReportItemAdapter(private val mContext: Context) :
             viewHolder.mAmountTextView!!.text = reportItem.amount
             viewHolder.mNotesTextView!!.text = reportItem.notes
             viewHolder.mCheckBox!!.isChecked = reportItem.status == Report.Status.DONE
+            viewHolder.mCreatorTextView!!.text = "Created by: " + reportItem.creator
 
             viewHolder.mCheckBox!!.setOnCheckedChangeListener{ _, isChecked ->
                 if(isChecked) {

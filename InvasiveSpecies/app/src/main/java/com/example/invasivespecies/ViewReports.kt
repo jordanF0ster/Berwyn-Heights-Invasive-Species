@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.ktx.Firebase
 
 class ViewReports : Activity() {
 
@@ -27,31 +29,49 @@ class ViewReports : Activity() {
         mRecyclerView.layoutManager = LinearLayoutManager(this)
 
         getReports()
-//        val x = mAdapter.itemCount
-//        val y = mItems2.size
-//        mRecyclerView.adapter = mAdapter
     }
 
     private fun getReports() {
+        val extras = intent.extras
+        val type = extras!!.getString(ReportingHomeActivity.TYPE)
         var reportsDBRef = database.getReference("reports")
         reportsDBRef.get().addOnSuccessListener {
-             for (child in it.children){
-                 for(plant in child.children) {
-                     val report = Report(
-                         plant.child("id").value.toString(),
-                         plant.child("plantname").value.toString(),
-                         plant.child("color").value.toString(),
-                         plant.child("amount").value.toString(),
-                         plant.child("notes").value.toString(),
-                         getReportLocation(plant.child("location"))
-                     )
-                     mAdapter.add(report)
-                     var p = mAdapter.itemCount
-                     p
-//                     mItems2.add(report)
-                 }
-             }
+            if (type == ReportingHomeActivity.VIEW_ALL) {
+                for (child in it.children) {
+                    for (plant in child.children) {
+                        val report = Report(
+                            plant.child("id").value.toString(),
+                            plant.child("plantname").value.toString(),
+                            plant.child("color").value.toString(),
+                            plant.child("amount").value.toString(),
+                            plant.child("notes").value.toString(),
+                            getReportLocation(plant.child("location")),
+                            plant.child("creator").value.toString()
+                        )
+                        mAdapter.add(report)
+                    }
+                }
+            } else {
+                val userName = Firebase.auth.currentUser!!.displayName
+                for (child in it.children) {
+                    for (plant in child.children) {
+                        if (plant.child("creator").value.toString() == userName) {
+                            val report = Report(
+                                plant.child("id").value.toString(),
+                                plant.child("plantname").value.toString(),
+                                plant.child("color").value.toString(),
+                                plant.child("amount").value.toString(),
+                                plant.child("notes").value.toString(),
+                                getReportLocation(plant.child("location")),
+                                plant.child("creator").value.toString()
+                            )
+                            mAdapter.add(report)
+                        }
+                    }
+                }
+            }
             mRecyclerView.adapter = mAdapter
+
         }
     }
 
