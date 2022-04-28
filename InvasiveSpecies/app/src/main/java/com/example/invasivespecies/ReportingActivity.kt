@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.location.Location
 import android.os.Bundle
 import android.os.Looper
@@ -21,6 +22,10 @@ import com.google.android.gms.location.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
+import java.io.ByteArrayOutputStream
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
@@ -35,6 +40,7 @@ private lateinit var mAmountSpinner: Spinner
 
 private var mIsRequestingUpdates = false
 private lateinit var database: FirebaseDatabase
+private lateinit var storageRef: StorageReference
 private lateinit var mFusedLocationClient: FusedLocationProviderClient
 private lateinit var mLocationRequest: LocationRequest
 private lateinit var mLocationCallback: LocationCallback
@@ -46,6 +52,7 @@ class ReportingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_reporting)
 
         database = FirebaseDatabase.getInstance()
+        storageRef = Firebase.storage.reference
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) !=
@@ -104,6 +111,24 @@ class ReportingActivity : AppCompatActivity() {
         val creator = if (user != null && user.displayName != null) user.displayName else "none"
 
         val dbRef = database.getReference("reports").child(name).push()
+
+        val imageRef = storageRef.child(dbRef.key + ".jpg")
+
+        mImageView.isDrawingCacheEnabled = true
+        mImageView.buildDrawingCache()
+        if (mImageView.drawable != null) {
+            val bitmap = (mImageView.drawable as BitmapDrawable).bitmap
+            val baos = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+            val data = baos.toByteArray()
+            var uploadTask = imageRef.putBytes(data)
+            uploadTask.addOnFailureListener {
+                Toast.makeText(this, "Failed to upload Image", Toast.LENGTH_SHORT)
+                Log.i(TAG, "failed to upload imageView: " + it.message)
+                finish()
+            }
+        }
+
         val report = Report(
             dbRef.key,
             name,
@@ -113,7 +138,11 @@ class ReportingActivity : AppCompatActivity() {
             deviceLocation,
             creator!!
         )
-        dbRef.setValue(report)
+        try {
+            dbRef.setValue(report)
+        } catch (e: java.lang.Exception) {
+            Log.i(TAG, "Failed to save to db: $e")
+        }
 
         Toast.makeText(this, "Report Created", Toast.LENGTH_SHORT)
             .show()
@@ -209,7 +238,6 @@ class ReportingActivity : AppCompatActivity() {
         if (checkSelfPermission(ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mLocationCallback = getLocationCallback()
             if (!mIsRequestingUpdates) {
-                Log.i(TAG, "Adding location updates in onSuccess()")
                 mFusedLocationClient.requestLocationUpdates(mLocationRequest!!, mLocationCallback,
                     Looper.getMainLooper()
                 )
@@ -221,7 +249,6 @@ class ReportingActivity : AppCompatActivity() {
                     if (mIsRequestingUpdates) {
                         mFusedLocationClient.removeLocationUpdates(mLocationCallback)
                         mIsRequestingUpdates = false
-                        Log.i(TAG, "Removing location updates after time limit expired")
                     }
                 },
                 MEASURE_TIME,
@@ -233,10 +260,8 @@ class ReportingActivity : AppCompatActivity() {
     private fun getLocationCallback(): LocationCallback {
         return object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
-//                ensureColor()
                 // Get new location
                 val location = locationResult.lastLocation
-                Log.i(TAG, "Received new location:$location")
 
                 // Determine whether new location is better than current best estimate
                 if (null == deviceLocation ||
@@ -252,10 +277,6 @@ class ReportingActivity : AppCompatActivity() {
                         if (mIsRequestingUpdates) {
                             mFusedLocationClient.removeLocationUpdates(mLocationCallback)
                             mIsRequestingUpdates = false
-                            Log.i(
-                                TAG,
-                                "Removing location updates in onLocationResult()"
-                            )
                         }
                     }
                 }

@@ -3,6 +3,7 @@ package com.example.invasivespecies
 import android.location.Location
 import android.os.Parcelable
 import com.google.firebase.database.IgnoreExtraProperties
+import com.google.firebase.storage.StorageReference
 import java.util.*
 
 @IgnoreExtraProperties
@@ -27,7 +28,7 @@ class Report {
         amount: String,
         notes: String,
         location: Location?,
-        creator: String = "none"
+        creator: String = "none",
     ) {
         this.id = id
         this.plantname = plantname

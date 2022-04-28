@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 
 class ViewReports : Activity() {
 
@@ -17,7 +19,6 @@ class ViewReports : Activity() {
     private lateinit var mRecyclerView: RecyclerView
 
     private lateinit var database: FirebaseDatabase
-//    private val mItems2 = ArrayList<Report>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,12 +36,14 @@ class ViewReports : Activity() {
         val extras = intent.extras
         val type = extras!!.getString(ReportingHomeActivity.TYPE)
         var reportsDBRef = database.getReference("reports")
+        val storageRef = Firebase.storage.reference
         reportsDBRef.get().addOnSuccessListener {
             if (type == ReportingHomeActivity.VIEW_ALL) {
                 for (child in it.children) {
                     for (plant in child.children) {
+                        val id = plant.child("id").value.toString()
                         val report = Report(
-                            plant.child("id").value.toString(),
+                            id,
                             plant.child("plantname").value.toString(),
                             plant.child("color").value.toString(),
                             plant.child("amount").value.toString(),
@@ -56,8 +59,9 @@ class ViewReports : Activity() {
                 for (child in it.children) {
                     for (plant in child.children) {
                         if (plant.child("creator").value.toString() == userName) {
+                            val id = plant.child("id").value.toString()
                             val report = Report(
-                                plant.child("id").value.toString(),
+                                id,
                                 plant.child("plantname").value.toString(),
                                 plant.child("color").value.toString(),
                                 plant.child("amount").value.toString(),

@@ -1,17 +1,18 @@
 package com.example.invasivespecies
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
-import android.os.Bundle
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+
 
 class ReportItemAdapter(private val mContext: Context) :
     RecyclerView.Adapter<ReportItemAdapter.ViewHolder>() {
@@ -73,6 +74,24 @@ class ReportItemAdapter(private val mContext: Context) :
             viewHolder.mNotesTextView!!.text = reportItem.notes
             viewHolder.mCheckBox!!.isChecked = reportItem.status == Report.Status.DONE
             viewHolder.mCreatorTextView!!.text = "Created by: " + reportItem.creator
+
+            val ONE_MEGABYTE: Long = 1024 * 1024
+            val imageRef = Firebase.storage.reference.child(reportItem.id.toString() + ".jpg")
+            imageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener {
+                // Data for "images/island.jpg" is returned, use this as needed
+                val bmp = BitmapFactory.decodeByteArray(it, 0, it.size)
+                viewHolder.mImageView!!.setImageBitmap(
+                    Bitmap.createScaledBitmap(
+                        bmp,
+                        viewHolder.mImageView!!.width,
+                        viewHolder.mImageView!!.height,
+                        false
+                    )
+                )
+            }.addOnFailureListener {
+                Log.i(TAG, "Failed to download image: " + it.message)
+            }
+
 
             viewHolder.mCheckBox!!.setOnCheckedChangeListener{ _, isChecked ->
                 if(isChecked) {
