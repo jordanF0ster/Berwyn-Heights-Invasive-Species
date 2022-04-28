@@ -9,6 +9,7 @@ import com.google.firebase.ktx.Firebase
 
 private lateinit var createReportButton : Button
 private lateinit var viewReportsButton: Button
+private lateinit var viewMyReportsButton: Button
 private lateinit var signOutButton: Button
 
 class ReportingHomeActivity : AppCompatActivity() {
@@ -18,10 +19,12 @@ class ReportingHomeActivity : AppCompatActivity() {
 
         createReportButton = findViewById(R.id.createReportButton)
         viewReportsButton = findViewById(R.id.viewReportsButton)
+        viewMyReportsButton = findViewById(R.id.viewMyReportsButton)
         signOutButton = findViewById(R.id.signOutButton)
 
         createReportButton.setOnClickListener { createReport() }
-        viewReportsButton.setOnClickListener { viewReports() }
+        viewReportsButton.setOnClickListener { viewReports(VIEW_ALL) }
+        viewMyReportsButton.setOnClickListener { viewReports(VIEW_PERSONAL) }
         signOutButton.setOnClickListener { signOutAccount() }
     }
 
@@ -46,15 +49,20 @@ class ReportingHomeActivity : AppCompatActivity() {
         )
     }
 
-    private fun viewReports() {
-        startActivityForResult(
-            Intent(
-                this,
-                ViewReports::class.java
-            ),
-            ReportingActivity.VIEW_REPORT_REQUEST
+    private fun viewReports(type: String) {
+        val intent = Intent(
+            this,
+            ViewReports::class.java
+        )
+        intent.putExtra(TYPE, type)
+        startActivity(
+            intent
         )
     }
 
-
+    companion object {
+        const val TYPE = "type"
+        const val VIEW_ALL = "all"
+        const val VIEW_PERSONAL = "personal"
+    }
 }

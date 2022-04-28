@@ -1,6 +1,7 @@
 package com.example.invasivespecies
 
 import android.location.Location
+import android.os.Parcelable
 import com.google.firebase.database.IgnoreExtraProperties
 import java.util.*
 
@@ -13,6 +14,7 @@ class Report {
     var notes: String? = null
     var location: Location? = null
     var status = Status.NOTDONE
+    var creator: String
 
     enum class Status {
         NOTDONE, DONE
@@ -24,7 +26,8 @@ class Report {
         color: String,
         amount: String,
         notes: String,
-        location: Location?
+        location: Location?,
+        creator: String = "none"
     ) {
         this.id = id
         this.plantname = plantname
@@ -32,5 +35,6 @@ class Report {
         this.amount = amount
         this.notes = notes
         this.location = location
+        this.creator = creator
     }
 }

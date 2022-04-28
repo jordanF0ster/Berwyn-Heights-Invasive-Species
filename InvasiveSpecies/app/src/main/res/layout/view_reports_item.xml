@@ -51,4 +51,12 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:text="Removed?" />
+
+    <TextView
+        android:id="@+id/plant_item_creator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/plant_item_checkBox"
+        android:layout_alignParentRight="true"
+        android:text="Created By: XXX" />
 </RelativeLayout>
