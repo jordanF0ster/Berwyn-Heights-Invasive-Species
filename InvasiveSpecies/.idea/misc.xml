@@ -3,13 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/ham-z/OneDrive/Documents/Spring 2022/CMSC436/Berwyn-Heights-Invasive-Species/InvasiveSpecies/app/src/main/res/layout/activity_identifying.xml" value="0.22" />
+        <entry key="..\:/Users/ham-z/OneDrive/Documents/Spring 2022/CMSC436/Berwyn-Heights-Invasive-Species/InvasiveSpecies/app/src/main/res/layout/activity_reporting.xml" value="0.153125" />
+        <entry key="..\:/Users/ham-z/OneDrive/Documents/Spring 2022/CMSC436/Berwyn-Heights-Invasive-Species/InvasiveSpecies/app/src/main/res/layout/activity_reporting_home.xml" value="0.1" />
+        <entry key="..\:/Users/ham-z/OneDrive/Documents/Spring 2022/CMSC436/Berwyn-Heights-Invasive-Species/InvasiveSpecies/app/src/main/res/layout/list_item_view.xml" value="0.5" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_reporting.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_reporting_home.xml" value="0.25" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
