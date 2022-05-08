@@ -11,6 +11,7 @@ private lateinit var createReportButton : Button
 private lateinit var viewReportsButton: Button
 private lateinit var viewMyReportsButton: Button
 private lateinit var signOutButton: Button
+private lateinit var locatePlantButton: Button
 
 class ReportingHomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,11 +22,13 @@ class ReportingHomeActivity : AppCompatActivity() {
         viewReportsButton = findViewById(R.id.viewReportsButton)
         viewMyReportsButton = findViewById(R.id.viewMyReportsButton)
         signOutButton = findViewById(R.id.signOutButton)
+        locatePlantButton = findViewById(R.id.locatePlantButton)
 
         createReportButton.setOnClickListener { createReport() }
         viewReportsButton.setOnClickListener { viewReports(VIEW_ALL) }
         viewMyReportsButton.setOnClickListener { viewReports(VIEW_PERSONAL) }
         signOutButton.setOnClickListener { signOutAccount() }
+        locatePlantButton.setOnClickListener{ locatePlantOnMap()}
     }
 
     private fun signOutAccount() {
@@ -58,6 +61,14 @@ class ReportingHomeActivity : AppCompatActivity() {
         startActivity(
             intent
         )
+    }
+
+    private fun locatePlantOnMap() {
+        val intent = Intent(
+            this,
+            MapsActivity::class.java
+        )
+        startActivity(intent)
     }
 
     companion object {

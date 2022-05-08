@@ -11,10 +11,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="127dp"
-        android:layout_marginTop="294dp"
+        android:layout_marginTop="196dp"
         android:layout_marginEnd="128dp"
         android:text="Create Report"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,7 +39,8 @@
         android:layout_marginBottom="17dp"
         android:text="Sign Out"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/locatePlantButton" />
 
     <Button
         android:id="@+id/viewMyReportsButton"
@@ -51,4 +53,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewReportsButton" />
+
+    <Button
+        android:id="@+id/locatePlantButton"
+        android:layout_width="174dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="119dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="118dp"
+        android:text="Locate Plant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewMyReportsButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>
