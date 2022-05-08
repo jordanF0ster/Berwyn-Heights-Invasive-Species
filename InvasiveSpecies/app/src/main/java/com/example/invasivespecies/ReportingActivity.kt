@@ -8,10 +8,13 @@ import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.location.Location
 import android.os.Bundle
 import android.os.Looper
+import android.os.StrictMode
 import android.provider.MediaStore
+import android.text.Editable
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -26,6 +29,8 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import java.io.ByteArrayOutputStream
+import java.io.InputStream
+import java.net.URL
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
@@ -33,7 +38,7 @@ import java.util.concurrent.TimeUnit
 private lateinit var mImageView : ImageView
 private lateinit var mPictureButton: Button
 private lateinit var mSaveButton: Button
-private lateinit var mNameEditText: EditText
+private lateinit var mNameEditText: TextView
 private lateinit var mNotesEditText: EditText
 private lateinit var mColorSpinner: Spinner
 private lateinit var mAmountSpinner: Spinner
@@ -50,6 +55,11 @@ class ReportingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reporting)
+
+        // Allow for drawable building in main thread
+        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+
+        StrictMode.setThreadPolicy(policy)
 
         database = FirebaseDatabase.getInstance()
         storageRef = Firebase.storage.reference
@@ -77,6 +87,15 @@ class ReportingActivity : AppCompatActivity() {
 
         mColorSpinner = findViewById(R.id.colorSpinner)
         mAmountSpinner = findViewById(R.id.amountSpinner)
+
+        // Set data
+        mNameEditText.text = intent.getStringExtra("selection name")
+
+        val uri = intent.getStringExtra("selection image uri")
+        val d: Drawable = Drawable.createFromStream(URL(uri).content as InputStream, "src name")
+
+        mImageView.setImageDrawable(d)
+
 
         ArrayAdapter.createFromResource(
             this,

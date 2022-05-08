@@ -142,7 +142,7 @@ class LoginActivity : AppCompatActivity() {
             startActivity(
                 Intent(
                     this,
-                    ReportingHomeActivity::class.java
+                    IdentifyingActivity::class.java
                 )
             )
             finish()
