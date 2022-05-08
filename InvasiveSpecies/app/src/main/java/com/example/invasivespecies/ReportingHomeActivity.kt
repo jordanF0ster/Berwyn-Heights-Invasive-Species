@@ -43,7 +43,7 @@ class ReportingHomeActivity : AppCompatActivity() {
         startActivityForResult(
             Intent(
                 this,
-                ReportingActivity::class.java
+                IdentifyingActivity::class.java
             ),
             ReportingActivity.ADD_REPORT_REQUEST
         )
