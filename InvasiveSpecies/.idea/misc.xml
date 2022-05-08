@@ -3,13 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+<<<<<<< HEAD
         <entry key="..\:/Users/ham-z/OneDrive/Documents/Spring 2022/CMSC436/Berwyn-Heights-Invasive-Species/InvasiveSpecies/app/src/main/res/layout/activity_identifying.xml" value="0.22" />
         <entry key="..\:/Users/ham-z/OneDrive/Documents/Spring 2022/CMSC436/Berwyn-Heights-Invasive-Species/InvasiveSpecies/app/src/main/res/layout/activity_reporting.xml" value="0.153125" />
         <entry key="..\:/Users/ham-z/OneDrive/Documents/Spring 2022/CMSC436/Berwyn-Heights-Invasive-Species/InvasiveSpecies/app/src/main/res/layout/activity_reporting_home.xml" value="0.1" />
         <entry key="..\:/Users/ham-z/OneDrive/Documents/Spring 2022/CMSC436/Berwyn-Heights-Invasive-Species/InvasiveSpecies/app/src/main/res/layout/list_item_view.xml" value="0.5" />
+=======
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_login2.xml" value="0.20516304347826086" />
+>>>>>>> 7454706afec4c0fb919f3f49264bc41ae231a1d8
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_report_profile.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_reporting.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_reporting_home.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_view_reports.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/view_report_item.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/view_report_items.xml" value="0.67" />
+        <entry key="app/src/main/res/layout/view_reports_item.xml" value="0.33" />
       </map>
     </option>
   </component>
