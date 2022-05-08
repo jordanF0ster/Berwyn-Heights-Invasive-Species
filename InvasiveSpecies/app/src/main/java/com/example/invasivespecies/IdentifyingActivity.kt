@@ -2,7 +2,6 @@ package com.example.invasivespecies
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.StrictMode
@@ -93,11 +92,27 @@ class IdentifyingActivity: AppCompatActivity() {
                 val intent = Intent(context, ReportingActivity::class.java)
                 intent.putExtra("selection name", button.text.toString())
                 intent.putExtra("selection image uri", values[position][2] as String)
-                context.startActivity(intent)
+                (context as IdentifyingActivity).startActivityForResult(
+                    intent,
+                    ADD_REPORT_FROM_IDENTIFY
+                )
             }
 
             return rowView
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == ADD_REPORT_FROM_IDENTIFY) {
+            if (resultCode == RESULT_OK) {
+                finish()
+            }
+        }
+    }
+
+    companion object {
+        private const val ADD_REPORT_FROM_IDENTIFY = 2
     }
 
 }

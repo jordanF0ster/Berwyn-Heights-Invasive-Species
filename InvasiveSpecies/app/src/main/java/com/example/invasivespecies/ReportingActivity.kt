@@ -144,6 +144,7 @@ class ReportingActivity : AppCompatActivity() {
             uploadTask.addOnFailureListener {
                 Toast.makeText(this, "Failed to upload Image", Toast.LENGTH_SHORT)
                 Log.i(TAG, "failed to upload imageView: " + it.message)
+                setResult(RESULT_OK)
                 finish()
             }
         }
