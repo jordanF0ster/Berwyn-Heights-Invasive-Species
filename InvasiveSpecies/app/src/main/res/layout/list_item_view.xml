@@ -31,5 +31,5 @@
         android:layout_width="wrap_content"
         android:layout_height="37dp"
         android:layout_marginStart="32dp"
-        android:text="@string/plant1" />
+        android:text="" />
 </LinearLayout>

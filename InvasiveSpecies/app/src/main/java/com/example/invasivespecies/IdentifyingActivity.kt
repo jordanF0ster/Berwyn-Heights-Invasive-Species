@@ -2,6 +2,7 @@ package com.example.invasivespecies
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.StrictMode
@@ -62,8 +63,12 @@ class IdentifyingActivity: AppCompatActivity() {
                 val d: Drawable = Drawable.createFromStream(URL(fileLines[i].toString()).content as InputStream, "src name")
                 data[i].add(d)
                 defaultDrawable = d
+
+                data[i].add(fileLines[i])
             } else {
-                data[i].add(data[Random.nextInt(0, fileLines.size - 1)][1])
+                val j = Random.nextInt(0, fileLines.size - 1)
+                data[i].add(data[j][1])
+                data[i].add(fileLines[j])
             }
         }
 
@@ -81,14 +86,15 @@ class IdentifyingActivity: AppCompatActivity() {
             val button: Button = rowView.findViewById(R.id.button_id)
             button.text = values[position][0] as String
 
-            button.setOnClickListener {
-                val intent = Intent(context, ReportingActivity::class.java)
-                intent.putExtra("Selection", button.text.toString())
-                context.startActivity(intent)
-            }
-
             val image: ImageView = rowView.findViewById(R.id.image_list_element)
             image.setImageDrawable(values[position][1] as Drawable)
+
+            button.setOnClickListener {
+                val intent = Intent(context, ReportingActivity::class.java)
+                intent.putExtra("selection name", button.text.toString())
+                intent.putExtra("selection image uri", values[position][2] as String)
+                context.startActivity(intent)
+            }
 
             return rowView
         }
