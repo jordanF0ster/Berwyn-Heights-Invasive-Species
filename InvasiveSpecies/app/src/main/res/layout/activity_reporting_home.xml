@@ -26,7 +26,7 @@
         android:layout_marginStart="133dp"
         android:layout_marginTop="44dp"
         android:layout_marginEnd="133dp"
-        android:text="Veiw All Reports"
+        android:text="View All Reports"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/createReportButton" />
